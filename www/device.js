@@ -41,6 +41,7 @@ function Device () {
     this.cordova = null;
     this.model = null;
     this.manufacturer = null;
+    this.name = null;
     this.isVirtual = null;
     this.serial = null;
     this.isiOSAppOnMac = null;
@@ -65,6 +66,7 @@ function Device () {
                     me.isiOSAppOnMac = info.isiOSAppOnMac;
                 }
                 me.manufacturer = info.manufacturer || 'unknown';
+                me.name = info.name || 'unknown';
                 me.serial = info.serial || 'unknown';
 
                 // SDK Version is Android specific. If defined, it will be appended.

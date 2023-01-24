@@ -28,7 +28,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.bluetooth.BluetoothAdapter;
+import android.os.Build;
 import android.provider.Settings;
+import android.util.Log;
 
 public class Device extends CordovaPlugin {
     public static final String TAG = "Device";
@@ -74,7 +77,8 @@ public class Device extends CordovaPlugin {
             r.put("platform", this.getPlatform());
             r.put("model", this.getModel());
             r.put("manufacturer", this.getManufacturer());
-	        r.put("isVirtual", this.isVirtual());
+            r.put("name", this.getName());
+            r.put("isVirtual", this.isVirtual());
             r.put("serial", this.getSerialNumber());
             r.put("sdkVersion", this.getSDKVersion());
             callbackContext.success(r);
@@ -166,8 +170,31 @@ public class Device extends CordovaPlugin {
     }
 
     public boolean isVirtual() {
-	return android.os.Build.FINGERPRINT.contains("generic") ||
-	    android.os.Build.PRODUCT.contains("sdk");
+    return android.os.Build.FINGERPRINT.contains("generic") ||
+        android.os.Build.PRODUCT.contains("sdk");
     }
 
+    /**
+     * Get the device's commercial name.
+     *
+     * @return
+     */
+    public String getName() {
+        String name = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            name = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), "bluetooth_name");
+            Log.d(TAG, "bluetooth_name " + name);
+            if (name == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                name = Settings.Global.getString(this.cordova.getActivity().getContentResolver(), "device_name");
+                Log.d(TAG, "device_name " + name);
+            }
+        } else {
+            BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (mBluetoothAdapter != null) {
+                name = mBluetoothAdapter.getName();
+                Log.d(TAG, "bluetooth adapter " + name);
+            }
+        }
+        return name;
+    }
 }
