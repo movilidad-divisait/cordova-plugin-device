@@ -182,9 +182,10 @@ public class Device extends CordovaPlugin {
     public String getName() {
         String name = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            name = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), "bluetooth_name");
-            Log.d(TAG, "bluetooth_name " + name);
-            if (name == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
+                name = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), "bluetooth_name");
+                Log.d(TAG, "bluetooth_name " + name);
+            } else if (name == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 name = Settings.Global.getString(this.cordova.getActivity().getContentResolver(), "device_name");
                 Log.d(TAG, "device_name " + name);
             }
