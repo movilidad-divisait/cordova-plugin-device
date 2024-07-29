@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-device",
-  "version": "2.1.1-dev",
+  "version": "3.0.1-dev",
   "description": "Cordova Device Plugin",
   "types": "./types/index.d.ts",
   "cordova": {
@@ -9,9 +9,7 @@
       "android",
       "electron",
       "ios",
-      "windows",
-      "browser",
-      "osx"
+      "browser"
     ]
   },
   "repository": "github:apache/cordova-plugin-device",
@@ -23,9 +21,7 @@
     "cordova-android",
     "cordova-electron",
     "cordova-ios",
-    "cordova-windows",
-    "cordova-browser",
-    "cordova-osx"
+    "cordova-browser"
   ],
   "scripts": {
     "test": "npm run lint",
@@ -39,6 +35,10 @@
         "cordova-electron": ">=3.0.0"
       },
       "3.0.0": {
+        "cordova-electron": ">=3.0.0",
+        "cordova-android": ">=7.0.0"
+      },
+      "4.0.0": {
         "cordova": ">100"
       }
     }
