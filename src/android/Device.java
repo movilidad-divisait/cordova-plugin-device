@@ -32,6 +32,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 public class Device extends CordovaPlugin {
+    public static final String TAG = "Device";
 
     public static String uuid;                                // Device UUID
 
